@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace MVC.Utilities
 {
-    internal class StaticsDefinitions
+    public static class SD
     {
+        public const string OK = "OK";
+        public const string ERROR = "Error";
     }
 }

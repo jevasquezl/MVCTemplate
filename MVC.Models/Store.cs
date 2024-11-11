@@ -11,12 +11,12 @@ namespace MVC.Models
     {
         [Key]
         public int Id { get; set; }
-        [Required(ErrorMessage ="Requerido")]
-        [MaxLength(100, ErrorMessage ="Maximo 100")]
-        public string Name { get; set; }
         [Required(ErrorMessage = "Requerido")]
         [MaxLength(100, ErrorMessage = "Maximo 100")]
-        public string Description { get; set; }
+        public string Name { get; set; } = "";
+        [Required(ErrorMessage = "Requerido")]
+        [MaxLength(100, ErrorMessage = "Maximo 100")]
+        public string Description { get; set; } = "";
         [Required(ErrorMessage = "Requerido")]
         public bool State {  get; set; }
 

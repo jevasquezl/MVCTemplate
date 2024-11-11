@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using MVC.DataAccess.Data;
+using MVC.DataAccess.Repository;
 using MVC.DataAccess.Repository.IRepository;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,7 +17,7 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
-builder.Services.AddScoped<IUnitWork, IUnitWork>();
+builder.Services.AddScoped<IUnitWork, UnitWork>();
 
 var app = builder.Build();
 
