@@ -1,9 +1,8 @@
-﻿@model MVC.Models.Store
+﻿@model MVC.Models.Category
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var title = "Create Nuevo";
+    var title = "Update Category";
 }
-
 
 <form method="post">
     <div style="padding-left:15%; padding-right:15%; padding-bottom:inherit.4rem;">
@@ -13,8 +12,8 @@
     </div>
     @if (Model.Id != 0)
     {
-        title = "Update Store";
-        <input type="hidden" asp-for="Id" id="id"/>
+        title = "Update Category";
+        <input type="hidden" asp-for="Id" id="id" />
     }
     <div class="col-12 border-bottom p-0">
         <h2 class="text-primary">@title</h2>
@@ -22,14 +21,14 @@
     <div class="row mb-2">
         <div class="form-group col-md-6">
             <label>Name</label>
-            <input type="text" asp-for="Name" id="name" class="form-control" placeholder="Store name" />
+            <input type="text" asp-for="Name" id="name" class="form-control" placeholder="Category name" />
             <span asp-validation-for="Name" class="text-danger"></span>
         </div>
     </div>
     <div class="row mb-2">
         <div class="form-group col-md-6">
             <label>Description</label>
-            <input type="text" asp-for="Description" class="form-control" placeholder="Store Description" />
+            <input type="text" asp-for="Description" class="form-control" placeholder="Category Description" />
             <span asp-validation-for="Description" class="text-danger"></span>
         </div>
     </div>
@@ -45,39 +44,32 @@
     </div>
     <br />
     <div>
-        <partial name="_CreateReturnBtn" model="Model.Id" />
+        <partial name="_UpdateReturnBtn" model="Model.Id" />
     </div>
 
 </form>
 
-@section Scripts{
+@section Scripts {
     <partial name="_ValidationScriptsPartial" />
-    
     <script>
-        document.getElementById("serie").addEventListener('change', function () {
+        document.getElementById("name").addEventListener('change', function () {
             validateName();
         });
 
-        function validateName() 
-        {
-            var url = '@Url.Content("~/")' + "Admin/Store/ValidateName";
+        function validateName() {
+            var url = '@Url.Content("~/")' + "Admin/Category/ValidateName";
             var id = '#id';
-            var name = '#serie';
+            var name = '#name';
 
-            $.getJSON(url, { id: $(id).val(), serie: $(serie).val() }, function (data) {
+            $.getJSON(url, { id: $(id).val(), name: $(name).val() }, function (data) {
                 $.each(data, function (key, value) {
                     if (value) {
-                        var serie = document.getElementById("serie");
-                        Swal.fire("Error", "serie Exists", "error");
-                        serie.value = "";
+                        var name = document.getElementById("name");
+                        Swal.fire("Error", "Name Exists", "error");
+                        name.value = "";
                     }
                 })
-              })
+            })
         }
     </script>
-  }
-
-
-
-
-
+}

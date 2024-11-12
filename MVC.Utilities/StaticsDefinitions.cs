@@ -10,5 +10,7 @@ namespace MVC.Utilities
     {
         public const string OK = "OK";
         public const string ERROR = "Error";
+
+        public const string ImagenRoute = @"\images\products\";
     }
 }

@@ -9,7 +9,9 @@ namespace MVC.DataAccess.Repository.IRepository
     public interface IUnitWork: IDisposable
     {
         IStoreRepository StoreRepository { get; }
-
+        ICategoryRepository CategoryRepository { get; }
+        IBrandRepository BrandRepository { get; }
+        IProductRepository ProductRepository { get; }
         Task Save();
     }
 }

@@ -12,10 +12,17 @@ namespace MVC.DataAccess.Repository
     {
         private readonly ApplicationDbContext _context;
         public IStoreRepository StoreRepository { get; private set; }
+        public ICategoryRepository CategoryRepository { get; private set; }
+        public IBrandRepository BrandRepository { get; private set; }
+        public IProductRepository ProductRepository { get; private set; }
         public UnitWork(ApplicationDbContext context)
         {
             _context = context;
             StoreRepository = new StoreRepository(context);
+            CategoryRepository = new CategoryRepository(context);
+            BrandRepository = new BrandRepository(context);
+            ProductRepository = new ProductRepository(context);
+
         }
 
         public void Dispose()

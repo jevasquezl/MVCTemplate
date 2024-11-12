@@ -9,23 +9,23 @@ using System.Threading.Tasks;
 
 namespace MVC.DataAccess.Repository
 {
-    public class StoreRepository : Repository<Store>, IStoreRepository
+    public class BrandRepository : Repository<Brand>, IBrandRepository
     {
         private readonly ApplicationDbContext _db;
 
-        public StoreRepository(ApplicationDbContext context) : base(context)
+        public BrandRepository(ApplicationDbContext context) : base(context)
         {
             _db = context;
         }
 
-        public void Update(Store store)
+        public void Update(Brand brand)
         {
-           var storeDB =  _db.Store.FirstOrDefault(b => b.Id == store.Id);
-            if (storeDB != null)
+           var brandDB =  _db.Brand.FirstOrDefault(b => b.Id == brand.Id);
+            if (brandDB != null)
             {
-                storeDB.Name = store.Name;
-                storeDB.Description = store.Description;
-                storeDB.State = store.State;
+                brandDB.Name = brand.Name;
+                brandDB.Description = brand.Description;
+                brandDB.State = brand.State;
                 _db.SaveChanges();
             }
         }

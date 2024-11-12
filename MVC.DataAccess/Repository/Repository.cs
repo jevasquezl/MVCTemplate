@@ -10,12 +10,12 @@ using System.Threading.Tasks;
 
 namespace MVC.DataAccess.Repository
 {
-    internal class Repository<T> : IRepository<T> where T : class
+    public class Repository<T> : IRepository<T> where T : class
     {
         private readonly ApplicationDbContext _context;
         internal DbSet<T> dbSet;
 
-        internal Repository(ApplicationDbContext context)
+        public Repository(ApplicationDbContext context)
         {
             _context = context;
             dbSet = _context.Set<T>();
