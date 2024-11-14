@@ -1,7 +1,9 @@
-﻿using System;
+﻿using MVC.Models.Especifications;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -23,5 +25,9 @@ namespace MVC.DataAccess.Repository.IRepository
         void Remove(T entity);
         void RemoveRange(IEnumerable<T> entities);
 
+        PagedList<T> GetAllPages(Parameters parameters, Expression<Func<T, bool>> expresion = null,
+            Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
+            string includPropertys = null,
+            bool isTracking = true);
     }
 }

@@ -1,8 +1,72 @@
-﻿@{
+﻿@* @model IEnumerable<MVC.Models.Product> *@
+@model MVC.Models.Especifications.PagedList<MVC.Models.Product>
+@using MVC.Utilities
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Bien Venidos</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<header class="header">
+    <div class="container pt-sm-5">
+        <div class="heading-primary">
+            List of products & <br/>
+            Brands
+        </div>
+    </div>
+</header>
+
+<section>
+    <div class="container my-2">
+        <form asp-action="Index" method="get">
+            <div class="col-lg-6 col-md-6 col-sm-6 d-flex">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Search..." aria-label="Search" aria-describedby="button-addon2"
+                           name="search" value="@ViewData["ActualSearch"]" />
+                            
+                    <button type="submit" class="btn btn-outline-primary">
+                        <i class="bi bi-search"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+
+        <div class="row">
+            @foreach (var product in Model)
+            {
+                <div class="col-lg-3 col-md-6 col-sm-6 d-flex">
+                    <div class="card w-100 my-2">
+                        <img src="@SD.ImagenRoute@product.ImageUrl" class="card-img-top" style="aspect-ratio: 1 / 1" />
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title">@product.Description</h5>
+                            <p class="card-text">$@String.Format("{0:#,##0.000}", product.Price)</p>
+                            <div class="card-footer d-flex aling-items-end pt-3 px-0 pb-0 mt-auto bg-white">
+                                <a href="#" class="btn btn-outline-primary">
+                                    <i class="bi bi-tags-fill"></i> Detail
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        <a asp-action="Index" asp-route-pageNumber="@(1)" class="btn btn-outline-primary"
+           asp-route-actualSearch="@ViewData["ActualSearch"]">
+            <i  class="bg-info bi-skip-start-fill"></i>                     
+        </a>
+        <a asp-action="Index" asp-route-pageNumber="@((int?)ViewData["PageNumber"]-1)" class="btn btn-outline-primary @ViewData["Preview"]"
+           asp-route-actualSearch="@ViewData["ActualSearch"]">
+            Anterior
+        </a>
+        <span>Page @ViewData["PageNumber"] de @ViewData["TotalPages"]</span>
+        <a asp-action="Index" asp-route-pageNumber="@((int?)ViewData["PageNumber"]+1)" class="btn btn-outline-primary @ViewData["Next"]"
+           asp-route-actualSearch="@ViewData["ActualSearch"]">
+            Siguiente
+        </a>
+        <a asp-action="Index" asp-route-pageNumber="@(ViewData["TotalPages"])" class="btn btn-outline-primary"
+           asp-route-actualSearch="@ViewData["ActualSearch"]">
+            <i class="bg-info bi-skip-end-fill"></i>
+        </a>
+
+    </div>
+
+</section>

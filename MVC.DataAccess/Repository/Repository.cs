@@ -1,10 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MVC.DataAccess.Data;
 using MVC.DataAccess.Repository.IRepository;
+using MVC.Models.Especifications;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection.Metadata;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -54,6 +57,31 @@ namespace MVC.DataAccess.Repository
             }
             return await query.ToListAsync();
 
+        }
+
+        public PagedList<T> GetAllPages(Parameters parameters, Expression<Func<T, bool>> expresion = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string includPropertys = null, bool isTracking = true)
+        {
+            IQueryable<T> query = dbSet;
+            if (expresion != null)
+            {
+                query = query.Where(expresion);
+            }
+            if (includPropertys != null)
+            {
+                foreach (var incluidProp in includPropertys.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(incluidProp);
+                }
+            }
+            if (orderBy != null)
+            {
+                query = orderBy(query);
+            }
+            if (!isTracking)
+            {
+                query = query.AsNoTracking();
+            }
+            return PagedList<T>.ToPagedList(query, parameters.PageNumber, parameters.PageSize);
         }
 
         public async Task<T> GetFirts(Expression<Func<T, bool>> expresion = null, 
