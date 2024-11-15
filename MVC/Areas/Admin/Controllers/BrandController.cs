@@ -9,10 +9,10 @@ using System.ComponentModel;
 namespace MVC.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class MarcaController : Controller
+    public class BrandController : Controller
     {
         private readonly IUnitWork _unitWork;
-        public MarcaController(IUnitWork unitWork)
+        public BrandController(IUnitWork unitWork)
         {
             _unitWork = unitWork;
         }

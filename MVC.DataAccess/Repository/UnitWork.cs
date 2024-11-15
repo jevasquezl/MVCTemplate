@@ -15,6 +15,9 @@ namespace MVC.DataAccess.Repository
         public ICategoryRepository CategoryRepository { get; private set; }
         public IBrandRepository BrandRepository { get; private set; }
         public IProductRepository ProductRepository { get; private set; }
+
+        public IApplicationUserRepository ApplicationUserRepository { get; private set; }
+
         public UnitWork(ApplicationDbContext context)
         {
             _context = context;
@@ -22,9 +25,9 @@ namespace MVC.DataAccess.Repository
             CategoryRepository = new CategoryRepository(context);
             BrandRepository = new BrandRepository(context);
             ProductRepository = new ProductRepository(context);
+            ApplicationUserRepository = new ApplicationUserRepository(context);
 
         }
-
         public void Dispose()
         {
             _context.Dispose();

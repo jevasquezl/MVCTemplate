@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using MVC.DataAccess.Repository.IRepository;
 using MVC.Models;
 using MVC.Models.ErrorViewModels;
