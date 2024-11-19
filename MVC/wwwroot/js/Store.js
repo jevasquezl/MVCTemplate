@@ -1,12 +1,14 @@
 ﻿let datatable;
-$(document).ready(function () {
+//$(document).ready(function () {
+//    loadDataTable();
+//});
+$(function () {
     loadDataTable();
 });
-
 function loadDataTable()
 {
-    datatable = $('#tblData').DataTable(
-        {
+    datatable = $('#tblData').DataTable
+    ({
             "ajax": {
                 "url": "/Admin/Store/GetAll"
             },
@@ -50,7 +52,7 @@ function loadDataTable()
                 ]
         }
     );
-};
+}
 
 function Remove(url) {
     Swal.fire({
@@ -76,7 +78,7 @@ function Remove(url) {
                 }
             });
         }
-    })
+    });
 }
 
 

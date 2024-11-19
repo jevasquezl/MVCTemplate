@@ -1,0 +1,65 @@
+﻿@model MVC.Models.ApplicationUser
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var title = "Update User";
+}
+
+<form method="post">
+    <div style="padding-left:15%; padding-right:15%; padding-bottom:inherit.4rem;">
+        <div class="row border-0">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        </div>
+    </div>
+    @if (Model.Id != "")
+    {
+        title = "Update User";
+        <input type="hidden" asp-for="Id" id="id" />
+    }
+    <div class="col-12 border-bottom p-0">
+        <h2 class="text-primary">@title</h2>
+    </div>
+    <div class="row mb-2">
+        <div class="form-group col-md-6">
+            <label>Email</label>
+            <input type="text" asp-for="Email" id="email" class="form-control" placeholder="Email" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="row mb-2">
+        <div class="form-group col-md-6">
+            <label>Names</label>
+            <input type="text" asp-for="Names" class="form-control" placeholder="Names" />
+            <span asp-validation-for="Names" class="text-danger"></span>
+        </div>
+    </div>
+    <br />
+    <div>
+        <partial name="_UpdateReturnBtn" model="Model.Id" />
+    </div>
+
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        document.getElementById("email").addEventListener('change', function () {
+            validateName();
+        });
+
+        function validateName() {
+            var url = '@Url.Content("~/")' + "Admin/User/ValidateName";
+            var id = '#id';
+            var name = '#ename';
+
+            $.getJSON(url, { id: $(id).val(), name: $(name).val() }, function (data) {
+                $.each(data, function (key, value) {
+                    if (value) {
+                        var name = document.getElementById("email");
+                        Swal.fire("Error", "Email Exists", "error");
+                        name.value = "";
+                    }
+                })
+            })
+        }
+    </script>
+}

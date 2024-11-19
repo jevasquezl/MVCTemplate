@@ -109,7 +109,7 @@ namespace MVC.Areas.Identity.Pages.Account
 
             public string Role {  get; set; }
 
-            public IEnumerable<SelectListItem> ListRol {  get; set; }
+            public IEnumerable<SelectListItem> ListRole {  get; set; }
         }
 
 
@@ -118,7 +118,7 @@ namespace MVC.Areas.Identity.Pages.Account
             ReturnUrl = returnUrl;
             Input = new InputModel()
             {
-                ListRol = _roleManager.Roles.Where(r => r.Name != SD.Role_Client).Select(n => n.Name).Select(l => new SelectListItem
+                ListRole = _roleManager.Roles.Where(r => r.Name != SD.Role_Client).Select(n => n.Name).Select(l => new SelectListItem
                 {
                    Text = l,
                    Value = l

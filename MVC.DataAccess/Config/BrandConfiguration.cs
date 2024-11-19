@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace MVC.DataAccess.Config
 {
-    internal class MarcaConfiguration : IEntityTypeConfiguration<Brand>
+    internal class BrandConfiguration : IEntityTypeConfiguration<Brand>
     {
         public void Configure(EntityTypeBuilder<Brand> builder)
         {

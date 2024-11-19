@@ -11,6 +11,8 @@ namespace MVC.DataAccess.Repository.IRepository
 {
     public interface IApplicationUserRepository :IRepository<ApplicationUser>
     {
- 
+       Task<ApplicationUser> GetEntity(string id);
+
+        void Update(ApplicationUser user);
     }
 }

@@ -12,6 +12,6 @@ namespace MVC.DataAccess.Repository.IRepository
     public interface IProductRepository: IRepository<Product>
     {
         void Update(Product product);
-        IEnumerable<SelectListItem>? GetAllDropDown(string obj);
+        IEnumerable<SelectListItem> GetAllDropDown(string obj);
     }
 }

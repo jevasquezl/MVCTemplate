@@ -1,7 +1,7 @@
 ﻿@model MVC.Models.Brand
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var title = "Update Marca";
+    var title = "Update Brand";
 }
 
 <form method="post">
@@ -12,7 +12,7 @@
     </div>
     @if (Model.Id != 0)
     {
-        title = "Update Marca";
+        title = "Update Brand";
         <input type="hidden" asp-for="Id" id="id" />
     }
     <div class="col-12 border-bottom p-0">
@@ -57,7 +57,7 @@
         });
 
         function validateName() {
-            var url = '@Url.Content("~/")' + "Admin/Marca/ValidateName";
+            var url = '@Url.Content("~/")' + "Admin/Brand/ValidateName";
             var id = '#id';
             var name = '#name';
 

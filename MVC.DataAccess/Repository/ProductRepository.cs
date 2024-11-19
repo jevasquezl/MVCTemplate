@@ -19,7 +19,7 @@ namespace MVC.DataAccess.Repository
             _db = context;
         }
 
-        public IEnumerable<SelectListItem>? GetAllDropDown(string obj)
+        public IEnumerable<SelectListItem> GetAllDropDown(string obj)
         {
            if (obj == "Category")
             {

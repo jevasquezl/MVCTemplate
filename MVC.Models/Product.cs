@@ -30,18 +30,18 @@ namespace MVC.Models
         public bool State { get; set; }
 
 
-        public int? CategoryId { get; set; }
+        public int CategoryId { get; set; }
        
         [ForeignKey("CategoryId")]
-        public  Category? Category { get; set; }
+        public  Category Category { get; set; }
 
 
         public int? BrandId { get; set; }
       
         [ForeignKey("BrandId")]
-        public  Brand? Brand { get; set; }
+        public  Brand Brand { get; set; }
 
         public int? ParentId { get; set; }
-        public virtual Product? Parent {  get; set; }
+        public virtual Product Parent {  get; set; }
     }
 }

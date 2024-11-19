@@ -1,8 +1,10 @@
 ﻿let datatable;
-$(document).ready(function () {
+//$(document).ready(function () {
+//    loadDataTable();
+//});
+$(function () {
     loadDataTable();
 });
-
 function loadDataTable()
 {
     datatable = $('#tblData').DataTable(
@@ -50,7 +52,7 @@ function loadDataTable()
                 ]
         }
     );
-};
+}
 
 function Remove(url) {
     Swal.fire({
@@ -76,7 +78,7 @@ function Remove(url) {
                 }
             });
         }
-    })
+    });
 }
 
 

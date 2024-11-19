@@ -8,26 +8,16 @@ using System.Threading.Tasks;
 
 namespace MVC.DataAccess.Repository
 {
-    public class UnitWork : IUnitWork
+    public class UnitWork(ApplicationDbContext context) : IUnitWork
     {
-        private readonly ApplicationDbContext _context;
-        public IStoreRepository StoreRepository { get; private set; }
-        public ICategoryRepository CategoryRepository { get; private set; }
-        public IBrandRepository BrandRepository { get; private set; }
-        public IProductRepository ProductRepository { get; private set; }
+        private readonly ApplicationDbContext _context = context;
+        public IStoreRepository StoreRepository { get; private set; } = new StoreRepository(context);
+        public ICategoryRepository CategoryRepository { get; private set; } = new CategoryRepository(context);
+        public IBrandRepository BrandRepository { get; private set; } = new BrandRepository(context);
+        public IProductRepository ProductRepository { get; private set; } = new ProductRepository(context);
 
-        public IApplicationUserRepository ApplicationUserRepository { get; private set; }
+        public IApplicationUserRepository ApplicationUserRepository { get; private set; } = new ApplicationUserRepository(context);
 
-        public UnitWork(ApplicationDbContext context)
-        {
-            _context = context;
-            StoreRepository = new StoreRepository(context);
-            CategoryRepository = new CategoryRepository(context);
-            BrandRepository = new BrandRepository(context);
-            ProductRepository = new ProductRepository(context);
-            ApplicationUserRepository = new ApplicationUserRepository(context);
-
-        }
         public void Dispose()
         {
             _context.Dispose();

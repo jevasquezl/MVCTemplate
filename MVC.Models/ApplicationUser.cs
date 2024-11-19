@@ -13,10 +13,10 @@ namespace MVC.Models
     {
         [Required(ErrorMessage = "Requerido")]
         [MaxLength(100)]
-        public string? Names { get; set; }
+        public string Names { get; set; }
 
         [NotMapped]
-        public string? Role {  get; set; }
+        public string Role {  get; set; }
 
     }
 }

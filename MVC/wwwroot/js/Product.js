@@ -1,8 +1,10 @@
 ﻿let datatable;
-$(document).ready(function () {
+//$(document).ready(function () {
+//    loadDataTable();
+//});
+$(function () {
     loadDataTable();
 });
-
 function loadDataTable()
 {
     datatable = $('#tblData').DataTable(
@@ -32,11 +34,9 @@ function loadDataTable()
                         }
                     },
                     {
-                        "data": "state", 
-                        "render": function (data)
-                        {
-                            if (data == true)
-                            {
+                        "data": "state",
+                        "render": function (data) {
+                            if (data == true) {
                                 return "Active";
                             }
                             else {
@@ -46,9 +46,8 @@ function loadDataTable()
                     },
                     {
                         "data": "id",
-                        "render": function (data)
-                        {
-                        return `
+                        "render": function (data) {
+                            return `
                             <div class="text-center">
                                 <a href="/Admin/Product/Upsert/${data}" class="btn btn-success text-white" style="cursor:pointer">
                                     <i class="bi bi-pencil-square"></i>
@@ -63,7 +62,7 @@ function loadDataTable()
                 ]
         }
     );
-};
+}
 
 function Remove(url) {
     Swal.fire({
@@ -89,7 +88,7 @@ function Remove(url) {
                 }
             });
         }
-    })
+    });
 }
 
 
