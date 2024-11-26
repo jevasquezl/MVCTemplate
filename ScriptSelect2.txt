@@ -1,0 +1,35 @@
+
+@section Scripts {
+
+    <script>
+        // Select 2
+        $("#productoId").select2({
+            placeholder: "Seleccionar Producto",
+            allowClear: true,
+            theme: "bootstrap-5",
+            ajax: {
+                url: "/inventario/inventario/BuscarProducto",
+                contentType: "application/json; charset=utf-8",
+                data: function (params) {
+                    var query = 
+                    {
+                        term: params.term
+                    };
+                    return query;
+                },
+                processResults: function (result) {
+                    return {
+                        results: $.map(result, function (item) {
+                            return {
+                                id: item.id,
+                                text: item.numeroSerie + ' ' + item.descripcion
+                            };
+                        })
+                    };
+                }
+            }
+        });
+
+    </script>
+
+}

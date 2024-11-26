@@ -115,6 +115,11 @@ namespace MVC.Areas.Identity.Pages.Account
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 //var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                 var user = _signInManager.UserManager.FindByEmailAsync(Input.Email);
+                if( user.Result == null)
+                {
+                    ModelState.AddModelError(string.Empty, "Invalid login name.");
+                    return Page();
+                }
 
                 var result = await _signInManager.PasswordSignInAsync(user.Result.UserName, Input.Password, Input.RememberMe, lockoutOnFailure: false);
 

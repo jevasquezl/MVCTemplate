@@ -1,0 +1,48 @@
+﻿@using MVC.Utilities
+@model MVC.Models.ViewModels.InventoryViewModel
+@{
+    ViewData["Title"] = "NiewInventory";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var title = "Create Inventory";
+}
+
+
+<form method="post" enctype="multipart/form-data">
+    <div style="padding-left:15%; padding-right:15%; padding-bottom: 0.5rem;">
+        <div class="row border-0">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        </div>
+
+        <input asp-for="Inventory.State" hidden />
+        <input asp-for="Inventory.ApplicationUserId" hidden />
+        <input asp-for="Inventory.StartDate" hidden />
+        <input asp-for="Inventory.EndDate" hidden />
+
+        <div class="col-12 border-botton p-0">
+            <h2 class="text-info">@title</h2>
+        </div>
+
+        <div class="row mb-2">
+            <div class="col-md-6">
+                <label>Store</label>
+                <select asp-for="Inventory.StoreId" asp-items="@Model.StoreList" class="form-select">
+                    <option disabled selected>-- Select Store --</option>
+                </select>
+                <span asp-validation-for="Inventory.StoreId" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="d-grid gap-2 d-md-block">
+            <button type="submit" class="btn btn-primary">Next</button>
+            <a asp-action="Index" class="btn btn-success">Salir</a>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+
+
+
+

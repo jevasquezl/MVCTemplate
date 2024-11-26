@@ -15,9 +15,12 @@ namespace MVC.DataAccess.Repository
         public ICategoryRepository CategoryRepository { get; private set; } = new CategoryRepository(context);
         public IBrandRepository BrandRepository { get; private set; } = new BrandRepository(context);
         public IProductRepository ProductRepository { get; private set; } = new ProductRepository(context);
-
         public IApplicationUserRepository ApplicationUserRepository { get; private set; } = new ApplicationUserRepository(context);
-
+        public IStoreProductRepository StoreProductRepository { get; private set; } = new StoreProductRepository(context);
+        public IInventoryRepository InventoryRepository { get; private set; } = new InventoryRepository(context);
+        public IInventoryDetailRepository InventoryDetailRepository { get; private set; } = new InventoryDetailRepository(context);
+        public IKardexRepository KardexRepository { get; private set; } = new KardexRepository(context);
+        
         public void Dispose()
         {
             _context.Dispose();

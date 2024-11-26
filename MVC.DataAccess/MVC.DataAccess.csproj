@@ -31,4 +31,8 @@
     <Folder Include="Migrations\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="Repository\StoreProductRepository.cs" />
+  </ItemGroup>
+
 </Project>
