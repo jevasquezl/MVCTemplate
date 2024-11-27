@@ -7,6 +7,7 @@ using MVC.DataAccess.Repository.IRepository;
 using MVC.Models;
 using MVC.Models.ViewModels;
 using MVC.Utilities;
+using Rotativa.AspNetCore;
 using Stripe;
 using System;
 using System.ComponentModel;
@@ -245,6 +246,29 @@ namespace MVC.Areas.Inventory.Controllers
             return Ok();
         }
 
+        public async Task<IActionResult> PrintKardex(string startdate, string lastdate, int productId)
+        {
+
+            KardexViewModel kardexVM = new KardexViewModel();
+            kardexVM.Product = new MVC.Models.Product();
+            kardexVM.Product = await _unitWork.ProductRepository.Get(productId);
+            kardexVM.StartDate = DateTime.Parse(startdate);
+            kardexVM.LastDate = DateTime.Parse(lastdate).AddHours(23).AddMinutes(59);
+            kardexVM.KardexList = await _unitWork.KardexRepository.GetAll(
+                k => k.StoreProduct.ProductId == productId &&
+                (k.RegisterDate >= kardexVM.StartDate && k.RegisterDate <= kardexVM.LastDate),
+            includPropertys: "StoreProduct,StoreProduct.Product,StoreProduct.Store",
+                orderBy: o => o.OrderBy(o => o.RegisterDate)
+                );
+
+            return new ViewAsPdf("PrintKardex", kardexVM)
+            {
+                FileName = "Kardex.pdf",
+                PageOrientation = Rotativa.AspNetCore.Options.Orientation.Portrait,
+                PageSize = Rotativa.AspNetCore.Options.Size.A4,
+                CustomSwitches = "--page--pffset 0 --footer-center [page] --footer-font-size 12"
+            };
+        }
         #endregion
     }
 }

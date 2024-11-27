@@ -1,5 +1,6 @@
 //using Fluent.Infrastructure.FluentModel;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
@@ -81,6 +82,8 @@ app.MapRazorPages();
 
 //para adicionar app.MapRazorPages hay que adicionar el servicio: builder.Services.AddRazorPages()
 //Tambien pide configurar un EmailSender en utilidades y crearlo como servicio
+IWebHostEnvironment env = app.Environment;
+Rotativa.AspNetCore.RotativaConfiguration.Setup(env.WebRootPath, "..\\Rotativa\\Windows\\");
 
 app.Run();
 
