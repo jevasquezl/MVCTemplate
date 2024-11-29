@@ -17,7 +17,13 @@ namespace MVC.DataAccess.Repository.IRepository
         IInventoryRepository InventoryRepository { get; }
         IInventoryDetailRepository InventoryDetailRepository { get; }
         IKardexRepository KardexRepository { get; }
+        ICompanytRepository CompanytRepository { get; }
 
+        IShoppingCartRepository ShoppingCartRepository { get; }
+
+        IOrderRepository OrderRepository { get; }
+
+        IOrderDetailRepository OrderDetailRepository { get; }
         Task Save();
     }
 }

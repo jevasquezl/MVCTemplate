@@ -13,7 +13,7 @@ namespace MVC.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     [Migration("20241125212525_inventario")]
-    partial class inventario
+    partial class Inventario
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

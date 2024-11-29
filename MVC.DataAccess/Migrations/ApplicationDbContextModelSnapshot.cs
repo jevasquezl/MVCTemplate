@@ -74,6 +74,61 @@ namespace MVC.DataAccess.Migrations
                     b.ToTable("Category");
                 });
 
+            modelBuilder.Entity("MVC.Models.Company", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Country")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int>("StoreSaleId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedId");
+
+                    b.HasIndex("StoreSaleId");
+
+                    b.HasIndex("UpdatedId");
+
+                    b.ToTable("Company");
+                });
+
             modelBuilder.Entity("MVC.Models.Inventory", b =>
                 {
                     b.Property<int>("Id")
@@ -187,6 +242,101 @@ namespace MVC.DataAccess.Migrations
                     b.ToTable("Kardex");
                 });
 
+            modelBuilder.Entity("MVC.Models.Order", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Carrier")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("City")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Country")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CustomerName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateOrder")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DatePay")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DatePayLimit")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeliveryNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DeliveryOrder")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("StateOrder")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StatePay")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Telephone")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("TotalOrder")
+                        .HasColumnType("float");
+
+                    b.Property<string>("TransactionId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.ToTable("Order");
+                });
+
+            modelBuilder.Entity("MVC.Models.OrderDetail", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ProductoId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderId");
+
+                    b.HasIndex("ProductoId");
+
+                    b.ToTable("OrderDetail");
+                });
+
             modelBuilder.Entity("MVC.Models.Product", b =>
                 {
                     b.Property<int>("Id")
@@ -236,6 +386,33 @@ namespace MVC.DataAccess.Migrations
                     b.HasIndex("ParentId");
 
                     b.ToTable("Product");
+                });
+
+            modelBuilder.Entity("MVC.Models.ShoppingCart", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ApplicationUserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ShoppingCart");
                 });
 
             modelBuilder.Entity("MVC.Models.Store", b =>
@@ -510,6 +687,33 @@ namespace MVC.DataAccess.Migrations
                     b.HasDiscriminator().HasValue("ApplicationUser");
                 });
 
+            modelBuilder.Entity("MVC.Models.Company", b =>
+                {
+                    b.HasOne("MVC.Models.ApplicationUser", "Created")
+                        .WithMany()
+                        .HasForeignKey("CreatedId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("MVC.Models.Store", "Store")
+                        .WithMany()
+                        .HasForeignKey("StoreSaleId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("MVC.Models.ApplicationUser", "Updated")
+                        .WithMany()
+                        .HasForeignKey("UpdatedId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Created");
+
+                    b.Navigation("Store");
+
+                    b.Navigation("Updated");
+                });
+
             modelBuilder.Entity("MVC.Models.Inventory", b =>
                 {
                     b.HasOne("MVC.Models.ApplicationUser", "ApplicationUser")
@@ -567,6 +771,32 @@ namespace MVC.DataAccess.Migrations
                     b.Navigation("StoreProduct");
                 });
 
+            modelBuilder.Entity("MVC.Models.Order", b =>
+                {
+                    b.HasOne("MVC.Models.ApplicationUser", "AplicationUser")
+                        .WithMany()
+                        .HasForeignKey("ApplicationUserId");
+
+                    b.Navigation("AplicationUser");
+                });
+
+            modelBuilder.Entity("MVC.Models.OrderDetail", b =>
+                {
+                    b.HasOne("MVC.Models.Order", "Order")
+                        .WithMany()
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MVC.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductoId");
+
+                    b.Navigation("Order");
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("MVC.Models.Product", b =>
                 {
                     b.HasOne("MVC.Models.Brand", "Brand")
@@ -591,6 +821,25 @@ namespace MVC.DataAccess.Migrations
                     b.Navigation("Category");
 
                     b.Navigation("Parent");
+                });
+
+            modelBuilder.Entity("MVC.Models.ShoppingCart", b =>
+                {
+                    b.HasOne("MVC.Models.ApplicationUser", "ApplicationUser")
+                        .WithMany()
+                        .HasForeignKey("ApplicationUserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("MVC.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("ApplicationUser");
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("MVC.Models.StoreProduct", b =>

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace MVC.DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class inventario : Migration
+    public partial class Inventario : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

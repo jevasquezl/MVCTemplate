@@ -1,5 +1,7 @@
-﻿using MVC.DataAccess.Data;
+﻿using MVC.DataAccess.Config;
+using MVC.DataAccess.Data;
 using MVC.DataAccess.Repository.IRepository;
+using Stripe;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +22,13 @@ namespace MVC.DataAccess.Repository
         public IInventoryRepository InventoryRepository { get; private set; } = new InventoryRepository(context);
         public IInventoryDetailRepository InventoryDetailRepository { get; private set; } = new InventoryDetailRepository(context);
         public IKardexRepository KardexRepository { get; private set; } = new KardexRepository(context);
+        public ICompanytRepository CompanytRepository { get; private set; } = new CompanyRepository(context);
+
+        public IShoppingCartRepository ShoppingCartRepository { get; private set; } = new ShoppingCartRepository(context);
+
+        public IOrderRepository OrderRepository { get; private set; } = new OrderRepository(context);
         
+        public IOrderDetailRepository OrderDetailRepository { get; private set; } = new OrderDetailRepository(context);
         public void Dispose()
         {
             _context.Dispose();
