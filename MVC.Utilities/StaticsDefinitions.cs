@@ -12,7 +12,7 @@ namespace MVC.Utilities
         public const string ERROR = "Error";
 
         public const string ImagenRoute = @"\images\products\";
-        public const string ssCarroCompras = "Sesion carro Compras";
+        public const string ssShoppinCart = "Sesion carro Compras";
 
         public const string Role_Admin = "Admin";
         public const string Role_Client = "Cliente";

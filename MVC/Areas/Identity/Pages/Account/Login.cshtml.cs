@@ -16,6 +16,9 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 using MVC.Models;
+using MVC.DataAccess.Repository.IRepository;
+using Microsoft.AspNetCore.Http;
+using MVC.Utilities;
 
 namespace MVC.Areas.Identity.Pages.Account
 {
@@ -23,11 +26,12 @@ namespace MVC.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
-
-        public LoginModel(SignInManager<IdentityUser> signInManager, ILogger<LoginModel> logger)
+        private readonly IUnitWork _unitWork;
+        public LoginModel(SignInManager<IdentityUser> signInManager, ILogger<LoginModel> logger, IUnitWork unitWork)
         {
             _signInManager = signInManager;
             _logger = logger;
+            _unitWork = unitWork;
         }
 
         /// <summary>
@@ -125,7 +129,13 @@ namespace MVC.Areas.Identity.Pages.Account
 
                 if (result.Succeeded)
                 {
+                    var _user = await _unitWork.ApplicationUserRepository.GetFirts(x => x.UserName == Input.Email);
+                    var ShoppingList = await _unitWork.ShoppingCartRepository.GetAll(x => x.ApplicationUserId == _user.Id);
+                    var productsNumber = ShoppingList.Count();
+                    HttpContext.Session.SetInt32(SD.ssShoppinCart, productsNumber);
+
                     _logger.LogInformation("User logged in.");
+
                     return LocalRedirect(returnUrl);
                 }
                 if (result.RequiresTwoFactor)
