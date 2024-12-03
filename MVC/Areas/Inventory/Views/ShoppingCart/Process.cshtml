@@ -1,0 +1,147 @@
+﻿@model MVC.Models.ViewModels.ShoppingCartViewModel
+
+<form method="post">
+    <br />
+    <div class="backgroundWhiteBorder">
+        <div class="container">
+            <div class="card">
+                <div class="card-header bg-dark text-light ml-0 row">
+                    <div class="col-6">
+                        <i class="fa fa-shopping-cart"></i> &nbsp;
+                        Detalles de la Order
+                    </div>
+
+                </div>
+                <div class="card-body">
+                    <div class="container rounded p-2">
+                        <div class="row">
+                            <div class="col-12 col-lg-6 pb-4">
+                                <div class="row">
+                                    <h4 class="d-flex justify-content-between align-items-center mb-3">
+                                        <span class="text-success">Detalles de Envío:</span>
+                                    </h4>
+                                </div>
+                                <div class="row my-1">
+                                    <div class="col-3">
+                                        <label>Nombres</label>
+                                    </div>
+                                    <div class="col-9">
+                                        <input asp-for="Order.CustomerName" type="text" class="form-control" id="customerName" />
+                                    </div>
+                                </div>
+                                <div class="row my-1">
+                                    <div class="col-3">
+                                        <label>Telefono</label>
+                                    </div>
+                                    <div class="col-9">
+                                        <input asp-for="Order.Telephone" type="text" class="form-control" id="telephone"/>
+                                    </div>
+                                </div>
+                                <div class="row my-1">
+                                    <div class="col-3">
+                                        <label>Direccion</label>
+                                    </div>
+                                    <div class="col-9">
+                                        <input asp-for="Order.Address" type="text" class="form-control" id="address"/>
+                                    </div>
+                                </div>
+                                <div class="row my-1">
+                                    <div class="col-3">
+                                        <label>Ciudad</label>
+                                    </div>
+                                    <div class="col-9">
+                                        <input asp-for="Order.City" type="text" class="form-control" id="city"/>
+                                    </div>
+                                </div>
+                                <div class="row my-1">
+                                    <div class="col-3">
+                                        <label>Pais</label>
+                                    </div>
+                                    <div class="col-9">
+                                        <input asp-for="Order.Country" type="text" class="form-control" id="country"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-5 offset-lg-1">
+                                <h4 class="d-flex justify-content-between align-items-center mb-3">
+                                    <span class="text-success">Productos:</span>
+                                </h4>
+                                <ul class="list-group mb-3">
+                                    @foreach (var item in Model.ShoppingCartList)
+                                    {
+                                        <li class="list-group-item d-flex justify-content-between">
+                                            <div>
+                                                <h6 class="my-0">@item.Product.Description</h6>
+                                                <small class="text-muted">Cantidad: @item.Quantity</small>
+                                            </div>
+                                            <span class="text-muted">$ @(item.Product.Price * item.Quantity)</span>
+                                        </li>
+                                    }
+
+                                    <li class="list-group-item d-flex justify-content-between bg-light">
+                                        <strong class="text-success">Total (USD)</strong>
+                                        <strong class="text-success">$@(Model.Order.TotalOrder)</strong>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="row">
+                        <div class="col-12 col-md-8 pt-2">
+                            <p class="text-success">Fecha Estimada de Envío: @DateTime.Now.AddDays(7).ToShortDateString() - @DateTime.Now.AddDays(14).ToShortDateString()</p>
+                        </div>
+                        <div class="col-12 col-md-4">
+
+                            <button type="submit" value="Realizar Pedido" class="btn btn-success form-control" id="process">Realizar Pedido</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-12  p-0">
+        <h3 class="text-success text-center"><i class="bi bi-cart-check-fill"></i></h3>
+    </div>
+    <div class="col-12 p-1">
+        <div class="text-center border-0">
+            <a asp-area="Inventory" asp-controller="ShoppingCart" asp-action="Index" class="btn btn-outline-success ">Regresar al Carro</a>
+        </div>
+
+    </div>
+</form>
+
+@section Scripts{
+    <script>
+        $("#process").click(function() {
+            let customerName = document.getElementById("customerName").value;
+            let telephone = document.getElementById("telephone").value;
+            let address = document.getElementById("address").value;
+            let city = document.getElementById("city").value;
+            let country = document.getElementById("country").value;
+ 
+            if(customerName == '') {
+                Swal.fire("Error","Ingresar Nombres","error");
+                return false;
+            }
+            if(telephone == '') {
+                Swal.fire("Error","Ingresar telefono","error");
+                return false;
+            }
+            if(address == '') {
+                Swal.fire("Error","Ingresar Direccion","error");
+                return false;
+            }
+            if(city == '') {
+                Swal.fire("Error","Ingresar Ciudad","error");
+                return false;
+            }
+            if(country == '') {
+                Swal.fire("Error","Ingresar Pais","error");
+                return false;
+            }
+            return true;
+        })
+    </script>
+}

@@ -16,7 +16,7 @@ namespace MVC.Models
         public string ApplicationUserId { get; set; }
 
         [ForeignKey("ApplicationUserId")]
-        public ApplicationUser AplicationUser { get; set; }
+        public ApplicationUser ApplicationUser { get; set; }
 
         public DateTime DateOrder { get; set; }
         public DateTime DeliveryOrder { get; set; }
@@ -36,6 +36,8 @@ namespace MVC.Models
         public DateTime DatePayLimit { get; set; }
 
         public string TransactionId { get; set; }
+
+        public string SessionId { get; set; }
 
         public string Telephone {  get; set; }
 

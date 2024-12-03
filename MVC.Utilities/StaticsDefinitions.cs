@@ -19,16 +19,16 @@ namespace MVC.Utilities
         public const string Role_Storage = "Inventario";
 
         // States de la Orden
-        public const string StatePending = "Pendiente";
-        public const string StateAppproved = "Aprobado";
-        public const string StateInProcess = "Procesando";
-        public const string StateSend = "Enviado";
-        public const string StateCancel = "Cancelado";
-        public const string StateReturned = "Devuelto";
+        public const string StateOrderPending = "Pending";
+        public const string StateOrderAppproved = "Approved";
+        public const string StateOrderInProcess = "Processed";
+        public const string StateOrderSend = "Sended";
+        public const string StateOrderCancel = "Canceled";
+        public const string StateOrderReturned = "Returned";
         // State del Pago de la Orden
-        public const string PayStatePending = "Pendiente";
-        public const string PayStateApproved = "Aprobado";
-        public const string PayStateDelayed = "Retrasado";
-        public const string PayStateRefusedo = "Rechazado";
+        public const string StatePayedPending = "Pending";
+        public const string StatePayedApproved = "Approved";
+        public const string StatePayedDelayed = "Delayed";
+        public const string StatePayedRefusedo = "Rejected";
     }
 }

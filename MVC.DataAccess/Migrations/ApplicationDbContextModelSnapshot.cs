@@ -283,6 +283,9 @@ namespace MVC.DataAccess.Migrations
                     b.Property<DateTime>("DeliveryOrder")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("SessionId")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("StateOrder")
                         .HasColumnType("nvarchar(max)");
 
@@ -773,11 +776,11 @@ namespace MVC.DataAccess.Migrations
 
             modelBuilder.Entity("MVC.Models.Order", b =>
                 {
-                    b.HasOne("MVC.Models.ApplicationUser", "AplicationUser")
+                    b.HasOne("MVC.Models.ApplicationUser", "ApplicationUser")
                         .WithMany()
                         .HasForeignKey("ApplicationUserId");
 
-                    b.Navigation("AplicationUser");
+                    b.Navigation("ApplicationUser");
                 });
 
             modelBuilder.Entity("MVC.Models.OrderDetail", b =>

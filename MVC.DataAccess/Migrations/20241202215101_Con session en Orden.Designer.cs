@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MVC.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241129170725_Order")]
-    partial class Order
+    [Migration("20241202215101_Con session en Orden")]
+    partial class ConsessionenOrden
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -286,6 +286,9 @@ namespace MVC.DataAccess.Migrations
                     b.Property<DateTime>("DeliveryOrder")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("SessionId")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("StateOrder")
                         .HasColumnType("nvarchar(max)");
 
@@ -306,6 +309,38 @@ namespace MVC.DataAccess.Migrations
                     b.HasIndex("ApplicationUserId");
 
                     b.ToTable("Order");
+                });
+
+            modelBuilder.Entity("MVC.Models.OrderDetail", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ProductoId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderId");
+
+                    b.HasIndex("ProductoId");
+
+                    b.ToTable("OrderDetail");
                 });
 
             modelBuilder.Entity("MVC.Models.Product", b =>
@@ -749,6 +784,23 @@ namespace MVC.DataAccess.Migrations
                         .HasForeignKey("ApplicationUserId");
 
                     b.Navigation("ApplicationUser");
+                });
+
+            modelBuilder.Entity("MVC.Models.OrderDetail", b =>
+                {
+                    b.HasOne("MVC.Models.Order", "Order")
+                        .WithMany()
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MVC.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductoId");
+
+                    b.Navigation("Order");
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("MVC.Models.Product", b =>

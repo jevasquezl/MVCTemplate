@@ -776,11 +776,11 @@ namespace MVC.DataAccess.Migrations
 
             modelBuilder.Entity("MVC.Models.Order", b =>
                 {
-                    b.HasOne("MVC.Models.ApplicationUser", "AplicationUser")
+                    b.HasOne("MVC.Models.ApplicationUser", "ApplicationUser")
                         .WithMany()
                         .HasForeignKey("ApplicationUserId");
 
-                    b.Navigation("AplicationUser");
+                    b.Navigation("ApplicationUser");
                 });
 
             modelBuilder.Entity("MVC.Models.OrderDetail", b =>

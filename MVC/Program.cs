@@ -11,6 +11,7 @@ using MVC.DataAccess.Data;
 using MVC.DataAccess.Repository;
 using MVC.DataAccess.Repository.IRepository;
 using MVC.Utilities;
+using Stripe;
 using System;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -58,6 +59,8 @@ builder.Services.AddSession(options =>
     options.Cookie.IsEssential = true;
 });
 
+builder.Services.Configure<StripeSettings>(builder.Configuration.GetSection("Stripe"));
+
 var app = builder.Build();
  
 // Configure the HTTP request pipeline.
@@ -74,6 +77,8 @@ else
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+
+StripeConfiguration.ApiKey = builder.Configuration.GetSection("Stripe:SecretKey").Get<string>();
 
 app.UseRouting();
 

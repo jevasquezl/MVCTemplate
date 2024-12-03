@@ -30,9 +30,9 @@ namespace MVC.DataAccess.Config
             builder.Property(x => x.City).IsRequired(false);
             builder.Property(x => x.Country).IsRequired(false);
             builder.Property(x => x.CustomerName).IsRequired();
-
+            builder.Property(x => x.SessionId).IsRequired(false);
             /* Relation */
-            builder.HasOne(x => x.AplicationUser).WithMany()
+            builder.HasOne(x => x.ApplicationUser).WithMany()
                 .HasForeignKey(x => x.ApplicationUserId)
                 .OnDelete(DeleteBehavior.NoAction);
 
