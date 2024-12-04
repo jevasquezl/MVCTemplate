@@ -41,7 +41,7 @@ namespace MVC.Areas.Inventory.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var elements = await _unitWork.StoreProductRepository.GetAll(includPropertys: "Store,Product");
+            var elements = await _unitWork.StoreProductRepository.GetAll(includeProperties: "Store,Product");
             return Json(new { data = elements });
         }
 
@@ -137,7 +137,7 @@ namespace MVC.Areas.Inventory.Controllers
             kardexVM.KardexList = await _unitWork.KardexRepository.GetAll(
                 k => k.StoreProduct.ProductId == productId &&
                 (k.RegisterDate >= kardexVM.StartDate && k.RegisterDate <= kardexVM.LastDate),
-            includPropertys: "StoreProduct,StoreProduct.Product,StoreProduct.Store",
+            includeProperties: "StoreProduct,StoreProduct.Product,StoreProduct.Store",
                 orderBy: o => o.OrderBy(o=>o.RegisterDate)
                 );
 
@@ -185,9 +185,9 @@ namespace MVC.Areas.Inventory.Controllers
         public async Task<IActionResult> InventoryDetail(int id)
         {
             inventoryVM = new InventoryViewModel();
-            inventoryVM.Inventory = await _unitWork.InventoryRepository.GetFirts(i => i.Id == id, includPropertys: "Store");
+            inventoryVM.Inventory = await _unitWork.InventoryRepository.GetFirts(i => i.Id == id, includeProperties: "Store");
             inventoryVM.InventoryDetails = await _unitWork.InventoryDetailRepository.GetAll
-                (x => x.InventoryId == id, includPropertys:"Product,Product.Brand");
+                (x => x.InventoryId == id, includeProperties:"Product,Product.Brand");
 
             return View(inventoryVM);
         }
@@ -257,7 +257,7 @@ namespace MVC.Areas.Inventory.Controllers
             kardexVM.KardexList = await _unitWork.KardexRepository.GetAll(
                 k => k.StoreProduct.ProductId == productId &&
                 (k.RegisterDate >= kardexVM.StartDate && k.RegisterDate <= kardexVM.LastDate),
-            includPropertys: "StoreProduct,StoreProduct.Product,StoreProduct.Store",
+            includeProperties: "StoreProduct,StoreProduct.Product,StoreProduct.Store",
                 orderBy: o => o.OrderBy(o => o.RegisterDate)
                 );
 

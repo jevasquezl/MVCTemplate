@@ -94,7 +94,7 @@ namespace MVC.Areas.Inventory.Controllers
             _shoppingCartViewModel = new ShoppingCartViewModel();
             _shoppingCartViewModel.Company = await _unitWork.CompanytRepository.GetFirts();
             _shoppingCartViewModel.Product = await _unitWork.ProductRepository.GetFirts(x => x.Id == id,
-                includPropertys: "Brand,Category");
+                includeProperties: "Brand,Category");
             var storeProduct = await _unitWork.StoreProductRepository.GetFirts(x => x.ProductId ==  id && 
                                                                                     x.StoreId == _shoppingCartViewModel.Company.StoreSaleId);
             if (storeProduct == null)

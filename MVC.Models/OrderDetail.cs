@@ -20,7 +20,7 @@ namespace MVC.Models
 
         public int ProductId { get; set; }
 
-        [ForeignKey("ProductoId")]
+        [ForeignKey("ProductId")]
         public Product Product { get; set; }
 
         public int Quantity { get; set; }

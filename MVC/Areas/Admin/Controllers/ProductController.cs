@@ -202,7 +202,7 @@ namespace MVC.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var elements = await _unitWork.ProductRepository.GetAll(includPropertys:"Category,Brand");
+            var elements = await _unitWork.ProductRepository.GetAll(includeProperties:"Category,Brand");
             return Json(new { data = elements });
         }
 

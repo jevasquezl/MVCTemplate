@@ -14,11 +14,11 @@ namespace MVC.DataAccess.Repository.IRepository
         Task<T> Get(int id);
         Task<IEnumerable<T>> GetAll(Expression<Func<T, bool>> expresion = null,
             Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
-            string includPropertys = null,
+            string includeProperties = null,
             bool isTracking = true
             );
         Task<T> GetFirts(Expression<Func<T, bool>> expresion = null,
-            string includPropertys = null,
+            string includeProperties = null,
             bool isTracking = true
             );
         Task Create(T entity);
@@ -27,7 +27,7 @@ namespace MVC.DataAccess.Repository.IRepository
 
         PagedList<T> GetAllPages(Parameters parameters, Expression<Func<T, bool>> expresion = null,
             Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
-            string includPropertys = null,
+            string includeProperties = null,
             bool isTracking = true);
     }
 }

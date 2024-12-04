@@ -328,7 +328,7 @@ namespace MVC.DataAccess.Migrations
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ProductoId")
+                    b.Property<int?>("ProductId")
                         .HasColumnType("int");
 
                     b.Property<int>("Quantity")
@@ -338,7 +338,7 @@ namespace MVC.DataAccess.Migrations
 
                     b.HasIndex("OrderId");
 
-                    b.HasIndex("ProductoId");
+                    b.HasIndex("ProductId");
 
                     b.ToTable("OrderDetail");
                 });
@@ -796,7 +796,7 @@ namespace MVC.DataAccess.Migrations
 
                     b.HasOne("MVC.Models.Product", "Product")
                         .WithMany()
-                        .HasForeignKey("ProductoId");
+                        .HasForeignKey("ProductId");
 
                     b.Navigation("Order");
 

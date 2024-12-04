@@ -1,0 +1,269 @@
+﻿@model MVC.Models.ViewModels.OrderDetailViewModel
+@using MVC.Utilities
+
+<form method="post">
+    <input hidden asp-for="Order.Id" />
+    <br />
+    <div class="container">
+        <div class="card">
+            <div class="card-header bg-dark text-light ml-0 row ">
+                <div class="col-12 d-none d-md-block col-md-6 pb-1">
+                    <i class="fas fa-shopping-cart"></i> &nbsp; Resumen de la Order
+                </div>
+                <div class="col-12 col-md-4 offset-md-2 text-right">
+                    <a asp-area="Admin" asp-controller="Order" asp-action="Index" class="btn btn-outline-info form-control btn-sm">Regresar</a>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="container rounded p-2">
+                    <div class="row">
+                        <div class="col-12 col-lg-6 pb-4">
+                            <div class="row">
+                                <h4 class="d-flex justify-content-between align-items-center mb-3">
+                                    <span class="text-secondary">Detalles de Envío:</span>
+                                </h4>
+                            </div>
+                            <div class="row my-1">
+                                <div class="col-3">Orden</div>
+                                <div class="col-9">
+                                    <input asp-for="Order.Id" readonly type="text" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="row my-1">
+                                <div class="col-3">Estado de Orden</div>
+                                <div class="col-9">
+                                    <input asp-for="Order.StateOrder" readonly type="text" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="row my-1">
+                                <div class="col-3">Nombres</div>
+                                <div class="col-9">
+                                    @if (User.IsInRole(SD.Role_Admin))
+                                    {
+                                        <input asp-for="Order.CustomerName" class="form-control" />
+                                    }
+                                    else
+                                    {
+                                        <input asp-for="Order.CustomerName" readonly type="text" class="form-control" />
+                                    }
+
+                                </div>
+                            </div>
+                            <div class="row my-1">
+                                <div class="col-3">telefono</div>
+                                <div class="col-9">
+                                    @if (User.IsInRole(SD.Role_Admin))
+                                    {
+                                        <input asp-for="Order.Telephone" class="form-control" />
+                                    }
+                                    else
+                                    {
+                                        <input asp-for="Order.Telephone" readonly type="text" class="form-control" />
+                                    }
+                                </div>
+                            </div>
+                            <div class="row my-1">
+                                <div class="col-3">Direccion</div>
+                                <div class="col-9">
+                                    @if (User.IsInRole(SD.Role_Admin))
+                                    {
+                                        <input asp-for="Order.Address" class="form-control" />
+                                    }
+                                    else
+                                    {
+                                        <input asp-for="Order.Address" readonly type="text" class="form-control" />
+                                    }
+                                </div>
+                            </div>
+                            <div class="row my-1">
+                                <div class="col-3">Ciudad</div>
+                                <div class="col-9">
+                                    @if (User.IsInRole(SD.Role_Admin))
+                                    {
+                                        <input asp-for="Order.City" class="form-control" />
+                                    }
+                                    else
+                                    {
+                                        <input asp-for="Order.City" readonly type="text" class="form-control" />
+                                    }
+                                </div>
+                            </div>
+                            <div class="row my-1">
+                                <div class="col-3">Pais</div>
+                                <div class="col-9">
+                                    @if (User.IsInRole(SD.Role_Admin))
+                                    {
+                                        <input asp-for="Order.Country" class="form-control" />
+                                    }
+                                    else
+                                    {
+                                        <input asp-for="Order.Country" readonly type="text" class="form-control" />
+                                    }
+                                </div>
+                            </div>
+                            <div class="row my-1">
+                                <div class="col-3">Email</div>
+                                <div class="col-9">
+                                    @if (User.IsInRole(SD.Role_Admin))
+                                    {
+                                        <input asp-for="Order.ApplicationUser.Email" class="form-control" />
+                                    }
+                                    else
+                                    {
+                                        <input asp-for="Order.ApplicationUser.Email" readonly type="text" class="form-control" />
+                                    }
+                                </div>
+                            </div>
+                            <div class="row my-1">
+                                <div class="col-3">Fecha Order</div>
+                                <div class="col-9">
+                                    <input value="@Model.Order.DateOrder.ToShortDateString()" readonly type="text" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="row my-1">
+                                <div class="col-3">Carrier</div>
+                                <div class="col-9">
+                                    @if (User.IsInRole(SD.Role_Admin))
+                                    {
+                                        <input asp-for="Order.Carrier" class="form-control" id="carrie"/>
+                                    }
+                                    else
+                                    {
+                                        <input asp-for="Order.Carrier" readonly type="text" class="form-control" />
+                                    }
+                                </div>
+                            </div>
+                            <div class="row my-1">
+                                <div class="col-3">Numero Envio</div>
+                                <div class="col-9">
+                                    @if (User.IsInRole(SD.Role_Admin))
+                                    {
+                                        <input asp-for="Order.DeliveryNumber" class="form-control" id="deliverynumber" />
+                                    }
+                                    else
+                                    {
+                                        <input asp-for="Order.DeliveryNumber" readonly type="text" class="form-control" />
+                                    }
+                                </div>
+                            </div>
+                            <div class="row my-1">
+                                <div class="col-3">Fecha Envio</div>
+                                <div class="col-9">
+                                    @if (Model.Order.DeliveryOrder.Year < 1900)
+                                    {
+                                        <input id="deliveryorder" type="text" readonly class="form-control" />
+                                    }
+                                    else
+                                    {
+                                        <input value="@Model.Order.DeliveryOrder.ToShortDateString()" id="deliveryorder" type="text" readonly class="form-control" />
+                                    }
+
+                                </div>
+                            </div>
+                            @if (User.IsInRole(SD.Role_Admin))
+                            {
+                                <div class="row my-1">
+                                    <div class="col-3">Transaccion ID</div>
+                                    <div class="col-9">
+                                        <input asp-for="Order.TransactionId" type="text" readonly class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="row my-1">
+
+                                    <div class="col-3">Fecha de Pago</div>
+                                    <div class="col-9">
+                                        <input value="@Model.Order.DatePay.ToShortDateString()" readonly id="paymentdate" type="text" class="form-control" />
+                                    </div>
+                                </div>
+
+                                <div class="row my-1">
+                                    <div class="col-3">Estado Pago</div>
+                                    <div class="col-9">
+                                        <input asp-for="Order.StatePay" type="text" readonly class="form-control" />
+                                    </div>
+                                </div>
+                            }
+
+                        </div>
+                        <div class="col-12 col-lg-5 offset-lg-1">
+                            <h4 class="d-flex justify-content-between align-items-center mb-3">
+                                <span class="text-secondary">Detalle de la Order</span>
+                            </h4>
+                            <ul class="list-group mb-3">
+                                @foreach (var item in Model.OrderDetailList)
+                                {
+                                    <li class="list-group-item d-flex justify-content-between p-2">
+                                        <div class="row container">
+                                            <div class="col-8">
+                                                <input type="hidden" asp-for="@item.Id" />
+                                                <h6 class="my-0 text-secondary">@item.Product.Description</h6>
+                                                <small class="text-muted">Precio : @item.Price</small><br />
+                                                <small class="text-muted">Cantidad : @item.Quantity</small>
+                                            </div>
+                                            <div class="col-4 text-end">
+                                                <p class="text-success">@(String.Format("{0:C}", item.Price * item.Quantity))</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                }
+                                <li class="list-group-item bg-info">
+                                    <div class="row container">
+                                        <div class="col-8">
+                                            <h6 class="text-white">TOTAL </h6>
+                                        </div>
+                                        <div class="col-4 text-end">
+                                            <h6 class="text-white">@(String.Format("{0:C}", Model.Order.TotalOrder))</h6>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                            @if(User.IsInRole(SD.Role_Admin))
+                            {
+                                @if(Model.Order.StateOrder == SD.StateOrderApproved)
+                                {
+                                    <a asp-action="Process" asp-route-id="@Model.Order.Id" class="btn btn-primary form-control">
+                                        Empezar a Procesar
+                                    </a>
+                                }
+                                @if (Model.Order.StateOrder == SD.StateOrderInProcess)
+                                {
+                                    <input type="submit" value="Send Order" onclick="return ValidateData()" 
+                                        class="btn btn-primary form-control" formaction="/Admin/Order/SendOrder"
+                                        formemethod="post"/>
+                                }
+                            }
+                            else
+                            {
+                                <label class="btn btn-success form-control">@Model.Order.StateOrder</label> 
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts
+{
+    <script>
+    function ValidateData()
+    {
+        let carrie = document.getElementById("carrie").value;
+        let deliverynumber =document.getElementById("deliverynumber").value;
+
+        if(carrie == '')
+        {
+            Swal.fire("Error","Falta carrie","error")
+            return false;
+        }
+        if(deliverynumber == '')
+        {
+            Swal.fire("Error","Falta Numero de envio","error")
+            return false;
+        }
+        return true;
+    }
+    </script>
+}
+

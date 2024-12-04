@@ -18,7 +18,6 @@ namespace MVC.DataAccess.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     OrderId = table.Column<int>(type: "int", nullable: false),
                     ProductId = table.Column<int>(type: "int", nullable: false),
-                    ProductoId = table.Column<int>(type: "int", nullable: true),
                     Quantity = table.Column<int>(type: "int", nullable: false),
                     Price = table.Column<double>(type: "float", nullable: false)
                 },
@@ -32,8 +31,8 @@ namespace MVC.DataAccess.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_OrderDetail_Product_ProductoId",
-                        column: x => x.ProductoId,
+                        name: "FK_OrderDetail_Product_ProductId",
+                        column: x => x.ProductId,
                         principalTable: "Product",
                         principalColumn: "Id");
                 });
@@ -44,9 +43,9 @@ namespace MVC.DataAccess.Migrations
                 column: "OrderId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OrderDetail_ProductoId",
+                name: "IX_OrderDetail_ProductId",
                 table: "OrderDetail",
-                column: "ProductoId");
+                column: "ProductId");
         }
 
         /// <inheritdoc />

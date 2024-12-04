@@ -43,7 +43,7 @@ namespace MVC.Areas.Inventory.Controllers
 
             shoppingcartVM = new ShoppingCartViewModel();
             shoppingcartVM.Order = new Order();
-            shoppingcartVM.ShoppingCartList = await _unitWork.ShoppingCartRepository.GetAll(x => x.ApplicationUserId == claim.Value, includPropertys: "Product");
+            shoppingcartVM.ShoppingCartList = await _unitWork.ShoppingCartRepository.GetAll(x => x.ApplicationUserId == claim.Value, includeProperties: "Product");
             shoppingcartVM.Order.TotalOrder = 0;
             shoppingcartVM.Order.ApplicationUserId = claim.Value;
 
@@ -92,6 +92,7 @@ namespace MVC.Areas.Inventory.Controllers
             HttpContext.Session.SetInt32(SD.ssShoppinCart, productsNumber - 1);
             return RedirectToAction("Index");
         }
+
         public async Task<IActionResult> Process()
         {
             var claimIdentity = (ClaimsIdentity)User.Identity;
@@ -101,7 +102,7 @@ namespace MVC.Areas.Inventory.Controllers
             {
                 Order = new Order(),
                 ShoppingCartList = await _unitWork.ShoppingCartRepository.GetAll(
-                x => x.ApplicationUserId == claim.Value, includPropertys: "Product"),
+                x => x.ApplicationUserId == claim.Value, includeProperties: "Product"),
                 Company = await _unitWork.CompanytRepository.GetFirts()
             };
             shoppingcartVM.Order.TotalOrder = 0;
@@ -110,11 +111,12 @@ namespace MVC.Areas.Inventory.Controllers
             foreach (var list in shoppingcartVM.ShoppingCartList)
             {
                 list.Price = list.Product.Price;
-                shoppingcartVM.Order.TotalOrder += list.Product.Price = list.Quantity;
+                shoppingcartVM.Order.TotalOrder += list.Product.Price * list.Quantity;
             }
             shoppingcartVM.Order.CustomerName = shoppingcartVM.Order.ApplicationUser.Names;
             shoppingcartVM.Order.Telephone = shoppingcartVM.Order.ApplicationUser.PhoneNumber;
-
+//Aqui faltan datos de direccion en application user
+                
             foreach (var list in shoppingcartVM.ShoppingCartList)
             {
                 var product = await _unitWork.StoreProductRepository.GetFirts(
@@ -135,12 +137,13 @@ namespace MVC.Areas.Inventory.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Process(ShoppingCart shoppingCart)
         {
+
             var claimIdentity = (ClaimsIdentity)User.Identity;
             var claim = claimIdentity.FindFirst(ClaimTypes.NameIdentifier);
 
             shoppingcartVM.ShoppingCartList = await _unitWork.ShoppingCartRepository.GetAll(
                 x => x.ApplicationUserId == claim.Value,
-                includPropertys: "Product");
+                includeProperties: "Product");
             shoppingcartVM.Company = await _unitWork.CompanytRepository.GetFirts();
             shoppingcartVM.Order.TotalOrder = 0;
             shoppingcartVM.Order.ApplicationUserId = claim.Value;
@@ -187,7 +190,7 @@ namespace MVC.Areas.Inventory.Controllers
             var options = new SessionCreateOptions()
             {
                 SuccessUrl = _webUrl + $"inventory/ShoppingCart/ConfirmationOrder?id={shoppingcartVM.Order.Id}",
-                CancelUrl = _webUrl + "inventory/ShoppingCart/Index",
+                CancelUrl = _webUrl + $"inventory/ShoppingCart/CancelOrder?id={shoppingcartVM.Order.Id}",
                 LineItems = new List<SessionLineItemOptions>(),
                 Mode = "payment",
                 CustomerEmail = users.Email
@@ -221,7 +224,7 @@ namespace MVC.Areas.Inventory.Controllers
 
         public async Task<IActionResult> ConfirmationOrder(int id)
         {
-            var order = await _unitWork.OrderRepository.GetFirts(x => x.Id == id, includPropertys: "ApplicationUser");
+            var order = await _unitWork.OrderRepository.GetFirts(x => x.Id == id, includeProperties: "ApplicationUser");
             var service = new SessionService();
             Session session = service.Get(order.SessionId);
             var shoppingCart = await _unitWork.ShoppingCartRepository.GetAll(x => x.ApplicationUserId == order.ApplicationUserId);
@@ -229,7 +232,7 @@ namespace MVC.Areas.Inventory.Controllers
             if (session.PaymentStatus.ToLower() == "paid")
             {
                 _unitWork.OrderRepository.UpdatePayStripeId(id, session.Id, session.PaymentIntentId);
-                _unitWork.OrderRepository.UpdateState(id, SD.StateOrderAppproved, SD.StatePayedApproved);
+                _unitWork.OrderRepository.UpdateState(id, SD.StateOrderApproved, SD.StatePayedApproved);
                 await _unitWork.Save();
                 //Disminuir Stock de Sale Store
                 var company = await _unitWork.CompanytRepository.GetFirts();
@@ -253,6 +256,14 @@ namespace MVC.Areas.Inventory.Controllers
             _unitWork.ShoppingCartRepository.RemoveRange(shoppingCartList);
             await _unitWork.Save();
             HttpContext.Session.SetInt32(SD.ssShoppinCart, 0);
+
+            return View(id);
+        }
+
+        public async Task<IActionResult> CancelOrder(int id)
+        {
+            _unitWork.OrderRepository.UpdateState(id, SD.StateOrderCancel, SD.StatePayedCancel);
+            await _unitWork.Save();
 
             return View(id);
         }

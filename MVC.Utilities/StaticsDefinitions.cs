@@ -16,12 +16,12 @@ namespace MVC.Utilities
 
         public const string Role_Admin = "Admin";
         public const string Role_Client = "Cliente";
-        public const string Role_Storage = "Inventario";
+        public const string Role_Storage = "Inventory";
 
         // States de la Orden
         public const string StateOrderPending = "Pending";
-        public const string StateOrderAppproved = "Approved";
-        public const string StateOrderInProcess = "Processed";
+        public const string StateOrderApproved = "Approved";
+        public const string StateOrderInProcess = "InProcess";
         public const string StateOrderSend = "Sended";
         public const string StateOrderCancel = "Canceled";
         public const string StateOrderReturned = "Returned";
@@ -29,6 +29,7 @@ namespace MVC.Utilities
         public const string StatePayedPending = "Pending";
         public const string StatePayedApproved = "Approved";
         public const string StatePayedDelayed = "Delayed";
-        public const string StatePayedRefusedo = "Rejected";
+        public const string StatePayedCancel = "Canceled";
+        public const string StatePayedRejected = "Rejected";
     }
 }

@@ -33,16 +33,16 @@ namespace MVC.DataAccess.Repository
             return await dbSet.FindAsync(id);
         }
 
-        public async Task<IEnumerable<T>> GetAll(Expression<Func<T, bool>> expresion = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string includPropertys = null, bool isTracking = true)
+        public async Task<IEnumerable<T>> GetAll(Expression<Func<T, bool>> expresion = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string includeProperties = null, bool isTracking = true)
         {
             IQueryable<T> query = dbSet;
             if (expresion != null)
             {
                 query = query.Where(expresion);
             }
-            if( includPropertys != null)
+            if( includeProperties != null)
             {
-                foreach (var incluidProp in includPropertys.Split(new char[] {','}, StringSplitOptions.RemoveEmptyEntries))
+                foreach (var incluidProp in includeProperties.Split(new char[] {','}, StringSplitOptions.RemoveEmptyEntries))
                 {
                     query = query.Include(incluidProp);
                 }
@@ -59,16 +59,16 @@ namespace MVC.DataAccess.Repository
 
         }
 
-        public PagedList<T> GetAllPages(Parameters parameters, Expression<Func<T, bool>> expresion = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string includPropertys = null, bool isTracking = true)
+        public PagedList<T> GetAllPages(Parameters parameters, Expression<Func<T, bool>> expresion = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string includeProperties = null, bool isTracking = true)
         {
             IQueryable<T> query = dbSet;
             if (expresion != null)
             {
                 query = query.Where(expresion);
             }
-            if (includPropertys != null)
+            if (includeProperties != null)
             {
-                foreach (var incluidProp in includPropertys.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                foreach (var incluidProp in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
                 {
                     query = query.Include(incluidProp);
                 }
@@ -85,16 +85,16 @@ namespace MVC.DataAccess.Repository
         }
 
         public async Task<T> GetFirts(Expression<Func<T, bool>> expresion = null, 
-            string includPropertys = null, bool isTracking = true)
+            string includeProperties = null, bool isTracking = true)
         {
             IQueryable<T> query = dbSet;
             if (expresion != null)
             {
                 query = query.Where(expresion);
             }
-            if (includPropertys != null)
+            if (includeProperties != null)
             {
-                foreach (var incluidProp in includPropertys.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                foreach (var incluidProp in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
                 {
                     query = query.Include(incluidProp);
                 }
